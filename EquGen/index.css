@@ -32,11 +32,22 @@ body {
 }
 
 #controls {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 32px;
+    overflow-y: scroll;
+}
+
+#controls::-webkit-scrollbar {
+    display: none;
+}
+
+#controls {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 input {
@@ -119,4 +130,50 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+#github {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 24px;
+    height: 24px;
+
+    a {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        z-index: 50;
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+        pointer-events: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #logo {
+        display: none;
+    }
+
+    #content {
+        width: 100vw;
+    }
+
+    input {
+        width: calc(100vw - 64px);
+    }
+
+    #answer {
+        width: calc(100vw - 64px);
+    }
+
+    #bottom {
+        width: calc(100vw - 64px);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }

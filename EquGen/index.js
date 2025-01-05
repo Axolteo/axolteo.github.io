@@ -1,10 +1,10 @@
-let input = document.getElementById("goal");
-let output = document.getElementById("answer");
-let dep = document.getElementById("dep");
+const input = document.getElementById("goal");
+const output = document.getElementById("answer");
+const dep = document.getElementById("dep");
 
-let timer = document.getElementById("time");
-let ans = document.getElementById("ans");
-let len = document.getElementById("len");
+const timer = document.getElementById("time");
+const ans = document.getElementById("ans");
+const len = document.getElementById("len");
 
 let startDate;
 
@@ -25,30 +25,24 @@ function isSame(a, b) {
 }
 
 function getNum(G, depth, final, prevOp) {
-    let keys = Object.keys(ops);
-    let N = Math.round(math.random(10, 999));
-    let S = Math.round(math.random(2, 9));
+    const keys = Object.keys(ops);
+    const N = Math.round(math.random(10, 999));
+    const S = Math.round(math.random(2, 9));
 
-    let op = ops[keys[keys.length * Math.random() << 0]];
+    const op = ops[keys[keys.length * Math.random() << 0]];
 
-    let exp = op.use.replaceAll("N", N).replaceAll("S", S).replaceAll("G", G);
-    let getExp = op.getX.replaceAll("N", N).replaceAll("S", S).replaceAll("G", G).replaceAll("R", "round(random(1,99))");
+    const exp = op.use.replaceAll("N", N).replaceAll("S", S).replaceAll("G", G);
+    const getExp = op.getX.replaceAll("N", N).replaceAll("S", S).replaceAll("G", G).replaceAll("R", "round(random(1,99))");
     
     if (!isValid(getExp, null)) {
         return "retry";
     }
 
-    let X = math.evaluate(getExp).toFixed(7);
+    const X = math.evaluate(getExp).toFixed(7);
 
-    if (!isValid(exp, X)) {
+    if (!isValid(exp, X) || !isSame(exp.replace("X", X), G)) {
         return "retry";
     }
-
-    if (!isSame(exp.replace("X", X), G)) {
-        return "retry";
-    }
-
-    console.log(X, exp, getExp);
 
     let newX = X;
     
@@ -66,21 +60,21 @@ function getNum(G, depth, final, prevOp) {
     }
 }
 
-async function clicked() {
-    timer.innerHTML = "Time: timing...";
-    len.innerHTML = "Answer length: checking...";
-    ans.innerHTML = "Real answer: in progress...";
+function clicked() {
+    timer.innerText = "Time: timing...";
+    len.innerText = "Answer length: checking...";
+    ans.innerText = "Real answer: in progress...";
     startDate = new Date();
 
-    let out = await getFinalNum(input.value, dep.value);
+    let out = getFinalNum(input.value, dep.value);
     while (!isSame(out, input.value)) {
-        out = await getFinalNum(input.value, dep.value);
+        out = getFinalNum(input.value, dep.value);
     }
 
-    output.innerHTML = out;
-    timer.innerHTML = "Time: " + Math.abs(new Date() - startDate) + "ms";
-    ans.innerHTML = "Real answer: " + math.evaluate(out).toFixed(7);
-    len.innerHTML = "Answer length: " + out.length + " characters";
+    output.innerText = out;
+    timer.innerText = "Time: " + Math.abs(new Date() - startDate) + "ms";
+    ans.innerText = "Real answer: " + math.evaluate(out).toFixed(7);
+    len.innerText = "Answer length: " + out.length + " characters";
 }
 
 function getFinalNum(G, finalDepth) {
@@ -94,7 +88,7 @@ function getFinalNum(G, finalDepth) {
     }
 
     if (!isSame(G, out)) {
-        let fix = G + math.evaluate(out);
+        const fix = G + math.evaluate(out);
         out = fix + "-(" + out + ")";
     }
 
