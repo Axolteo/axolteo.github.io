@@ -73,6 +73,9 @@ async function clicked() {
     startDate = new Date();
 
     let out = await getFinalNum(input.value, dep.value);
+    while (!isSame(out, input.value)) {
+        out = await getFinalNum(input.value, dep.value);
+    }
 
     output.innerHTML = out;
     timer.innerHTML = "Time: " + Math.abs(new Date() - startDate) + "ms";
